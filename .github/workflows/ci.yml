@@ -75,13 +75,20 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
-      - name: 生成Gradle Wrapper 8.7（与AGP版本匹配）
+      # 直接下载Gradle 8.7，彻底避开系统gradle 9.6.1
+      - name: 下载Gradle 8.7 All
         run: |
           cd java_fms
-          gradle wrapper --gradle-version 8.7 --distribution-type all
+          wget https://services.gradle.org/distributions/gradle-8.7-all.zip
+          unzip gradle-8.7-all.zip
+          mv gradle-8.7 gradle
+          # 手动生成兼容8.7的gradlew
+          cp gradle/bin/gradlew .
+          cp -r gradle/lib/wrapper/* gradle/wrapper/
+          echo "distributionUrl=https\://services.gradle.org/distributions/gradle-8.7-all.zip" > gradle/wrapper/gradle-wrapper.properties
           chmod +x gradlew
       - name: 编译Release APK
-        run: cd java_fms && ./gradlew assembleRelease --warning-mode all
+        run: cd java_fms && ./gradlew assembleRelease --stacktrace
       - name: 上传APK
         uses: actions/upload-artifact@v4
         with:
