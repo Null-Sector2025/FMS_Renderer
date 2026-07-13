@@ -56,8 +56,11 @@ jobs:
           dotnet-version: "9.0.x"
       - name: 安装MAUI9工作负载
         run: dotnet workload install maui
-      - name: 发布编辑器
-        run: cd csharp_fms && dotnet publish FMSCurveEditor.csproj -c Release
+      # 分别发布Windows桌面端 + Android端，指定框架避免NETSDK1129
+      - name: 发布Windows编辑器
+        run: cd csharp_fms && dotnet publish FMSCurveEditor.csproj -c Release -f net9.0-windows -o bin/Release/win
+      - name: 发布Android编辑器
+        run: cd csharp_fms && dotnet publish FMSCurveEditor.csproj -c Release -f net9.0-android -o bin/Release/android
       - name: 上传编辑器包
         uses: actions/upload-artifact@v4
         with:
@@ -73,7 +76,7 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
-      - name: 生成Gradle Wrapper（云端执行，本地无需gradle）
+      - name: 生成Gradle Wrapper（云端执行）
         run: |
           cd java_fms
           gradle wrapper --gradle-version 8.7

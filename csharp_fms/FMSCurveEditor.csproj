@@ -1,14 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!-- 替换为.NET9 受支持框架，消除NETSDK1202过期警告 -->
     <TargetFrameworks>net9.0-android;net9.0-windows</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <RootNamespace>FMSCurveEditor</RootNamespace>
     <UseMaui>true</UseMaui>
     <MauiVersion>9.0.0</MauiVersion>
+    <!-- 跳过Maui隐式包警告 -->
+    <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="FMSCurveCore.cs" />
+    <!-- 补充MAUI控件依赖 -->
+    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.0" />
   </ItemGroup>
 </Project>
