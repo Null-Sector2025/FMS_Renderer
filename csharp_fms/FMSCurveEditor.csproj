@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0-android;net8.0-windows</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>FMSCurveEditor</RootNamespace>
+    <UseMaui>true</UseMaui>
+    <MauiVersion>8.0.40</MauiVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="FMSCurveCore.cs" />
+  </ItemGroup>
+</Project>

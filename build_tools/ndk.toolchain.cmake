@@ -12,6 +12,10 @@ add_definitions(
     -DFMS_MC_YSM_CSM=1
 )
 
-# Neon 浮点优化，longdouble 高精度不降级
-set(CMAKE_CXX_FLAGS "-O3 -ffast-math -mfpmath=neon -march=armv8-a")
+# 分架构编译参数：ARM启用Neon，x86 CI移除ARM专属flag
+if(CMAKE_ANDROID_ARCH_ABI STREQUAL "arm64-v8a")
+    set(CMAKE_CXX_FLAGS "-O3 -ffast-math -mfpmath=neon -march=armv8-a")
+else()
+    set(CMAKE_CXX_FLAGS "-O3 -ffast-math")
+endif()
 set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG ${CMAKE_CXX_FLAGS}")
