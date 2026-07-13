@@ -5,13 +5,13 @@
     <RootNamespace>FMSCurveEditor</RootNamespace>
     <UseMaui>true</UseMaui>
     <MauiVersion>9.0.0</MauiVersion>
-    <!-- 跳过Maui隐式包警告 -->
     <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
+    <!-- 关闭默认自动加载cs文件，避免重复项报错 -->
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="FMSCurveCore.cs" />
-    <!-- 补充MAUI控件依赖 -->
     <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.0" />
   </ItemGroup>
 </Project>

@@ -35,7 +35,7 @@ jobs:
         uses: android-actions/setup-android@v3
         with:
           ndk-version: "27.0.12077973"
-      - name: CMake编译（区分NDK/本地编译参数）
+      - name: CMake编译
         run: |
           cd cpp_fms
           cmake -B build -DCMAKE_TOOLCHAIN_FILE=../build_tools/ndk.toolchain.cmake
@@ -56,10 +56,9 @@ jobs:
           dotnet-version: "9.0.x"
       - name: 安装MAUI9工作负载
         run: dotnet workload install maui
-      # 分别发布Windows桌面端 + Android端，指定框架避免NETSDK1129
-      - name: 发布Windows编辑器
+      - name: 发布Windows端
         run: cd csharp_fms && dotnet publish FMSCurveEditor.csproj -c Release -f net9.0-windows -o bin/Release/win
-      - name: 发布Android编辑器
+      - name: 发布Android端
         run: cd csharp_fms && dotnet publish FMSCurveEditor.csproj -c Release -f net9.0-android -o bin/Release/android
       - name: 上传编辑器包
         uses: actions/upload-artifact@v4
@@ -76,13 +75,13 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
-      - name: 生成Gradle Wrapper（云端执行）
+      - name: 生成Gradle Wrapper 8.7（与AGP版本匹配）
         run: |
           cd java_fms
-          gradle wrapper --gradle-version 8.7
+          gradle wrapper --gradle-version 8.7 --distribution-type all
           chmod +x gradlew
       - name: 编译Release APK
-        run: cd java_fms && ./gradlew assembleRelease
+        run: cd java_fms && ./gradlew assembleRelease --warning-mode all
       - name: 上传APK
         uses: actions/upload-artifact@v4
         with:
