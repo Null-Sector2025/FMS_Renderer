@@ -70,30 +70,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: JDK17
+      - name: JDK17 环境
         uses: actions/setup-java@v4
         with:
           java-version: "17"
           distribution: "temurin"
-      # 直接下载Gradle 8.7，彻底避开系统gradle 9.6.1
-      - name: 下载Gradle 8.7 All
+      - name: 下载并部署Gradle 8.7（修复目录缺失、静默中断问题）
         run: |
           cd java_fms
+          mkdir -p gradle/wrapper
           wget https://services.gradle.org/distributions/gradle-8.7-all.zip
-          unzip gradle-8.7-all.zip
-          mv gradle-8.7 gradle
-          # 手动生成兼容8.7的gradlew
-          cp gradle/bin/gradlew .
-          cp -r gradle/lib/wrapper/* gradle/wrapper/
+          unzip -o gradle-8.7-all.zip
+          mv gradle-8.7 gradle_bin
+          cp gradle_bin/bin/gradlew ./gradlew
+          cp gradle_bin/lib/wrapper/gradle-wrapper.jar gradle/wrapper/
           echo "distributionUrl=https\://services.gradle.org/distributions/gradle-8.7-all.zip" > gradle/wrapper/gradle-wrapper.properties
           chmod +x gradlew
+          ls -la gradlew gradle/wrapper/
       - name: 编译Release APK
-        run: cd java_fms && ./gradlew assembleRelease --stacktrace
-      - name: 上传APK
+        run: cd java_fms && ./gradlew assembleRelease --stacktrace --info
+      - name: 上传APK产物
         uses: actions/upload-artifact@v4
         with:
           name: fms-android-apk
           path: java_fms/app/build/outputs/apk/release/*.apk
+          if-no-files-found: ignore
 
   package-all:
     needs: [build-python, build-cpp, build-csharp, build-java-android]
