@@ -35,12 +35,12 @@ jobs:
         uses: android-actions/setup-android@v3
         with:
           ndk-version: "27.0.12077973"
-      - name: CMake编译
+      - name: CMake编译（区分NDK/本地编译参数）
         run: |
           cd cpp_fms
           cmake -B build -DCMAKE_TOOLCHAIN_FILE=../build_tools/ndk.toolchain.cmake
           cmake --build build -j$(nproc)
-      - name: 上传lib
+      - name: 上传静态库
         uses: actions/upload-artifact@v4
         with:
           name: fms-cpp-lib
@@ -50,11 +50,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - name: 配置.NET8
+      - name: 安装.NET9 SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
-      - name: 安装MAUI workload
+          dotnet-version: "9.0.x"
+      - name: 安装MAUI9工作负载
         run: dotnet workload install maui
       - name: 发布编辑器
         run: cd csharp_fms && dotnet publish FMSCurveEditor.csproj -c Release
@@ -73,13 +73,12 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
-      # CI在线生成gradlew，Termux本地无需安装gradle耗流量
-      - name: 自动生成Gradle Wrapper
+      - name: 生成Gradle Wrapper（云端执行，本地无需gradle）
         run: |
           cd java_fms
           gradle wrapper --gradle-version 8.7
           chmod +x gradlew
-      - name: 编译APK
+      - name: 编译Release APK
         run: cd java_fms && ./gradlew assembleRelease
       - name: 上传APK
         uses: actions/upload-artifact@v4
@@ -92,12 +91,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: 下载全部产物
+      - name: 下载全部编译产物
         uses: actions/download-artifact@v4
         with:
           path: build_out
       - name: 打包完整发行包
-        run: tar -zcvf FMS_Renderer_Full_Build.tar.gz build_out docs build_tools
+        run: tar -zcvf FMS_Renderer_Full_Build.tar.gz build_out docs build_tools mc_models
       - name: 上传压缩包
         uses: actions/upload-artifact@v4
         with:
