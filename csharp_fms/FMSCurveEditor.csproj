@@ -5,6 +5,7 @@
     <RootNamespace>FMSCurveEditor</RootNamespace>
     <UseMaui>true</UseMaui>
     <MauiVersion>9.0.0</MauiVersion>
+    <Nullable>enable</Nullable>
     <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
@@ -12,6 +13,11 @@
   <ItemGroup>
     <Compile Include="FMSCurveCore.cs" />
     <Compile Include="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Maui.Graphics" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Maui.Core" Version="9.0.0" />
   </ItemGroup>
 </Project>

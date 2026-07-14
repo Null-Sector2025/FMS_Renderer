@@ -75,31 +75,14 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
-      - name: 下载并部署Gradle 8.7（修正gradlew路径）
+      # 官方标准生成gradle wrapper，彻底抛弃手动复制gradlew
+      - name: 自动生成Gradle Wrapper 8.7
         run: |
-          set -e
           cd java_fms
-          echo "1. 创建gradle/wrapper目录"
-          mkdir -p gradle/wrapper
-          ls -ld gradle
-          echo "2. 下载gradle-8.7-all.zip"
-          wget --progress=bar:force:noscroll https://services.gradle.org/distributions/gradle-8.7-all.zip
-          echo "3. 解压压缩包"
-          unzip -o gradle-8.7-all.zip
-          echo "4. 重命名解压文件夹"
-          mv gradle-8.7 gradle_bin
-          ls -ld gradle_bin
-          echo "5. 复制根目录gradlew启动脚本（修复路径错误）"
-          cp gradle_bin/gradlew ./gradlew
-          echo "6. 复制wrapper jar包"
-          cp gradle_bin/lib/wrapper/gradle-wrapper.jar gradle/wrapper/
-          echo "7. 写入gradle-wrapper配置"
-          echo "distributionUrl=https\://services.gradle.org/distributions/gradle-8.7-all.zip" > gradle/wrapper/gradle-wrapper.properties
-          echo "8. 添加执行权限"
+          gradle wrapper --gradle-version 8.7
           chmod +x gradlew
-          echo "=== 校验生成文件 ==="
           ls -la gradlew gradle/wrapper/
-      - name: 编译Release APK（完整日志输出）
+      - name: 编译Release APK
         run: cd java_fms && ./gradlew assembleRelease --stacktrace --info
       - name: 上传APK产物
         uses: actions/upload-artifact@v4

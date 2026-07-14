@@ -1,48 +1,48 @@
 using Microsoft.Maui;
-using Microsoft.Maui.Hosting;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 
 namespace FMSCurveEditor;
 
-class Program : MauiApplication
+// 标准MAUI9入口，继承MauiApplication（非密封类）
+public static class MauiProgram
 {
-    protected override MauiApp CreateMauiApp()
+    public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        builder.UseMauiApp<App>();
+        builder
+            .UseMauiApp<App>()
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+            });
         return builder.Build();
     }
-
-    static void Main(string[] args)
-    {
-        var app = new Program();
-        app.Run(args);
-    }
 }
 
-public class App : MauiApp
+// 顶层App仅指定首页，无需重写CreateWindow
+public class App : MauiApplication
 {
-    // 修正MAUI9标准重写签名
-    protected override Window CreateWindow(IActivationState? activationState)
+    public App()
     {
-        return new Window(new MainPage());
+        MainPage = new MainPage();
     }
 }
 
+// 主渲染编辑器页面
 public class MainPage : ContentPage
 {
     public MainPage()
     {
         Title = "FMS 微子级曲线奇点渲染编辑器";
+        BackgroundColor = Color.FromArgb("#1E1E1E");
         Content = new Label
         {
-            Text = "FMS Micro Curve Render Engine\n适配我的世界 Java/基岩/网易 YSM/CSM骨骼模型",
+            Text = "FMS Curve Render Engine\n适配我的世界 Java/基岩/网易 YSM/CSM骨骼模型",
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
-            FontSize = 16,
+            FontSize = 18,
             TextColor = Colors.White
         };
-        BackgroundColor = Color.FromArgb("#222222");
     }
 }
