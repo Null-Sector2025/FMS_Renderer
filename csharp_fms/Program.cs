@@ -1,10 +1,12 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using System;
 
 namespace FMSCurveEditor;
 
-// 标准MAUI9入口，继承MauiApplication（非密封类）
+#if ANDROID
+// Android平台专用MAUI入口
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
@@ -20,7 +22,6 @@ public static class MauiProgram
     }
 }
 
-// 顶层App仅指定首页，无需重写CreateWindow
 public class App : MauiApplication
 {
     public App()
@@ -28,21 +29,26 @@ public class App : MauiApplication
         MainPage = new MainPage();
     }
 }
+#endif
 
-// 主渲染编辑器页面
-public class MainPage : ContentPage
+// Windows桌面平台纯代码入口
+namespace FMSCurveEditor
 {
-    public MainPage()
+    class Program
     {
-        Title = "FMS 微子级曲线奇点渲染编辑器";
-        BackgroundColor = Color.FromArgb("#1E1E1E");
-        Content = new Label
+        static void Main(string[] args)
         {
-            Text = "FMS Curve Render Engine\n适配我的世界 Java/基岩/网易 YSM/CSM骨骼模型",
-            HorizontalOptions = LayoutOptions.Center,
-            VerticalOptions = LayoutOptions.Center,
-            FontSize = 18,
-            TextColor = Colors.White
-        };
+            Console.WriteLine("FMS Curve Render Editor Windows Desktop");
+            Console.WriteLine("微子级曲线奇点渲染引擎 - Windows桌面端");
+            // 基础业务初始化
+            var core = new FMSCurveCore();
+            Console.ReadLine();
+        }
+    }
+
+    public class MainPage
+    {
+        // Windows无MAUI窗口，仅做数据载体
+        public string Title { get; set; } = "FMS渲染编辑器";
     }
 }

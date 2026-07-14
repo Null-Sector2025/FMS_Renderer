@@ -3,7 +3,7 @@
     <TargetFrameworks>net9.0-android;net9.0-windows</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <RootNamespace>FMSCurveEditor</RootNamespace>
-    <UseMaui>true</UseMaui>
+    <UseMaui Condition="'$(TargetFramework)' == 'net9.0-android'">true</UseMaui>
     <MauiVersion>9.0.0</MauiVersion>
     <Nullable>enable</Nullable>
     <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
@@ -15,7 +15,8 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!-- 仅Android框架加载MAUI包 -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
     <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.0" />
     <PackageReference Include="Microsoft.Maui.Graphics" Version="9.0.0" />
     <PackageReference Include="Microsoft.Maui.Core" Version="9.0.0" />
