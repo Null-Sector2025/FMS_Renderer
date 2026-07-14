@@ -1,6 +1,7 @@
 namespace FMSCurveEditor;
 
 #if ANDROID
+using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
@@ -48,7 +49,8 @@ public class MainPage : ContentPage
 #endif
 
 #if WINDOWS
-// Windows纯控制台代码，无任何MAUI引用
+using System;
+// Windows纯控制台代码，补齐System解决Console报错
 class Program
 {
     static void Main(string[] args)
@@ -63,6 +65,7 @@ class Program
 
 public class MainPage
 {
-    public string Title { get; set; }
+    // 赋默认值消除非空警告
+    public string Title { get; set; } = string.Empty;
 }
 #endif

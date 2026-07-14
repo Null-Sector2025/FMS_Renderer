@@ -15,9 +15,11 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
 
+  <!-- 仅Android框架加载全套MAUI依赖，补齐MauiApp所需程序集 -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
     <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.0" />
     <PackageReference Include="Microsoft.Maui.Graphics" Version="9.0.0" />
     <PackageReference Include="Microsoft.Maui.Core" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Maui.ApplicationModel" Version="9.0.0" />
   </ItemGroup>
 </Project>
