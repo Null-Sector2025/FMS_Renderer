@@ -75,7 +75,7 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
-      - name: 下载并部署Gradle 8.7（分步校验，失败直接退出）
+      - name: 下载并部署Gradle 8.7（修正gradlew路径）
         run: |
           set -e
           cd java_fms
@@ -89,8 +89,8 @@ jobs:
           echo "4. 重命名解压文件夹"
           mv gradle-8.7 gradle_bin
           ls -ld gradle_bin
-          echo "5. 复制gradlew启动脚本"
-          cp gradle_bin/bin/gradlew ./gradlew
+          echo "5. 复制根目录gradlew启动脚本（修复路径错误）"
+          cp gradle_bin/gradlew ./gradlew
           echo "6. 复制wrapper jar包"
           cp gradle_bin/lib/wrapper/gradle-wrapper.jar gradle/wrapper/
           echo "7. 写入gradle-wrapper配置"
