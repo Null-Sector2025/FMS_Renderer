@@ -15,7 +15,6 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
 
-  <!-- 仅保留3个官方有效MAUI包，完全移除不存在的ApplicationModel -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
     <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.0" />
     <PackageReference Include="Microsoft.Maui.Graphics" Version="9.0.0" />

@@ -5,10 +5,12 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+// 完整限定MauiApp类型，解决CS0246找不到
+using MauiApp = Microsoft.Maui.MauiApp;
 
 public static class MauiProgram
 {
-    public static MauiApp CreateMauiApp()
+    public static Microsoft.Maui.MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
         builder
@@ -21,9 +23,9 @@ public static class MauiProgram
     }
 }
 
-public class App : MauiApplication
+public class App : Microsoft.Maui.MauiApplication
 {
-    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    protected override Microsoft.Maui.MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
     public App()
     {
         MainPage = new MainPage();
