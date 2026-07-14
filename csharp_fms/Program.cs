@@ -50,7 +50,6 @@ public class MainPage : ContentPage
 
 #if WINDOWS
 using System;
-// Windows控制台专用，补齐System解决Console报错
 class Program
 {
     static void Main(string[] args)
