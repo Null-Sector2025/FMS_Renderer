@@ -6,19 +6,25 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 
-// 标准MAUI9 正确入口，不单独引用MauiApp类型
 public static class MauiProgram
 {
-    public static MauiApplication CreateMauiApp()
+    public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>();
+        builder.ConfigureFonts(fonts =>
+        {
+            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+        });
         return builder.Build();
     }
 }
 
+// 继承抽象MauiApplication，必须重写CreateMauiApp
 public class App : MauiApplication
 {
+    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+
     public App()
     {
         MainPage = new MainPage();
