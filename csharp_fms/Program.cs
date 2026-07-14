@@ -5,27 +5,21 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
-// 完整限定MauiApp类型，解决CS0246找不到
-using MauiApp = Microsoft.Maui.MauiApp;
 
 public static class MauiProgram
 {
-    public static Microsoft.Maui.MauiApp CreateMauiApp()
+    // 返回类型修正为 MauiApplication，删除不存在MauiApp
+    public static MauiApplication CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-            });
+        builder.UseMauiApp<App>();
         return builder.Build();
     }
 }
 
-public class App : Microsoft.Maui.MauiApplication
+public class App : MauiApplication
 {
-    protected override Microsoft.Maui.MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    protected override MauiApplication CreateMauiApp() => MauiProgram.CreateMauiApp();
     public App()
     {
         MainPage = new MainPage();
