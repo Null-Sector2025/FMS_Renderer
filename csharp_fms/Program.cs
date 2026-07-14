@@ -50,7 +50,7 @@ public class MainPage : ContentPage
 
 #if WINDOWS
 using System;
-// Windows纯控制台代码，补齐System解决Console报错
+// Windows控制台专用，补齐System解决Console报错
 class Program
 {
     static void Main(string[] args)
@@ -65,7 +65,6 @@ class Program
 
 public class MainPage
 {
-    // 赋默认值消除非空警告
     public string Title { get; set; } = string.Empty;
 }
 #endif
