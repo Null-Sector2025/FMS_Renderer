@@ -6,9 +6,9 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 
+// 标准MAUI9 正确入口，不单独引用MauiApp类型
 public static class MauiProgram
 {
-    // 返回类型修正为 MauiApplication，删除不存在MauiApp
     public static MauiApplication CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
@@ -19,7 +19,6 @@ public static class MauiProgram
 
 public class App : MauiApplication
 {
-    protected override MauiApplication CreateMauiApp() => MauiProgram.CreateMauiApp();
     public App()
     {
         MainPage = new MainPage();

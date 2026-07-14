@@ -23,7 +23,6 @@ public class FMSCurveCore
     /// </summary>
     public double CalculateCurvePoint(double t, double[] controlPoints)
     {
-        // 自研FMS插值算法
         double result = 0;
         for (int i = 0; i < controlPoints.Length; i++)
         {
@@ -42,7 +41,6 @@ public class FMSCurveCore
 
     private double SplineWeight(double t, int index, int total)
     {
-        // 基础权重函数
         double x = t - (double)index / total;
         return Math.Exp(-x * x * 128);
     }
